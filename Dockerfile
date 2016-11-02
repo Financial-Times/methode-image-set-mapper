@@ -7,7 +7,7 @@ RUN apk --update add git \
  && BUILD_NUMBER=$(cat ../buildnum.txt) \
  && BUILD_URL=$(cat ../buildurl.txt) \
  && mvn install -Dbuild.git.revision=$HASH -Dbuild.git.revision=$HASH -Dbuild.number=$BUILD_NUMBER -Dbuild.url=$BUILD_URL -Djava.net.preferIPv4Stack=true \
- && rm -f target/methode-image-model-mapper-*sources.jar \
+ && rm -f target/methode-image-set-mapper-*sources.jar \
  && mv target/methode-image-set-mapper-*.jar /methode-image-set-mapper.jar \
  && mv methode-image-set-mapper.yaml /config.yaml \
  && apk del git \
