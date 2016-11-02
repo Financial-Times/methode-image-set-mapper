@@ -26,7 +26,6 @@ import java.util.UUID;
 
 import static com.ft.api.util.transactionid.TransactionIdUtils.TRANSACTION_ID_HEADER;
 import static com.ft.messaging.standards.message.v1.MediaType.JSON;
-import static com.ft.methodeimagesetmapper.util.ImageSetUuidGenerator.fromImageUuid;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;

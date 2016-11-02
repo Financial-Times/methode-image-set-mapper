@@ -3,6 +3,7 @@ package com.ft.methodeimagesetmapper.service;
 import com.ft.content.model.Content;
 import com.ft.content.model.Member;
 import com.ft.methodeimagesetmapper.exception.MethodeContentNotSupportedException;
+import com.ft.methodeimagesetmapper.exception.TransformationException;
 import com.ft.methodeimagesetmapper.model.EomFile;
 import com.google.common.collect.ImmutableSortedSet;
 import org.junit.Rule;
@@ -11,6 +12,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -140,6 +142,14 @@ public class MethodeImageModelMapperTest {
         assertThat(content.getMembers(), equalTo(ImmutableSortedSet.of(new Member(UUID))));
         assertThat(content.getMediaType(), equalTo("image/jpeg"));
         assertThat(content.getPublishReference(), equalTo(TRANSACTION_ID));
+    }
+
+    @Test(expected = TransformationException.class)
+    public void testTransformAndHandleExceptionsThrowsTransformationException() {
+        final EomFile eomFile = new EomFile(UUID, "Image", null, "", "", "", "", null);
+        methodeImageSetMapper.transformAndHandleExceptions(eomFile, () -> {
+            throw new IOException();
+        });
     }
 
 }

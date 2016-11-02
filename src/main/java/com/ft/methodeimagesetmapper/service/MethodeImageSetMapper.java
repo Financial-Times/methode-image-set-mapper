@@ -52,7 +52,7 @@ public class MethodeImageSetMapper implements ContentMapper {
                 .build());
     }
 
-    private Content transformAndHandleExceptions(EomFile eomFile, Action<Content> transformAction) {
+    Content transformAndHandleExceptions(EomFile eomFile, Action<Content> transformAction) {
         if (!isEomTypeSupported(eomFile)) {
             throw new MethodeContentNotSupportedException(String.format(FORMAT_UNSUPPORTED, eomFile.getUuid(), IMAGE_TYPE));
         }
@@ -177,7 +177,7 @@ public class MethodeImageSetMapper implements ContentMapper {
         return documentBuilderFactory.newDocumentBuilder();
     }
 
-    private interface Action<T> {
+    interface Action<T> {
         T perform() throws ParserConfigurationException, XPathExpressionException, IOException;
     }
 }

@@ -1,8 +1,10 @@
 package com.ft.methodeimagesetmapper.messaging;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.ft.messaging.standards.message.v1.Message;
 import com.ft.messaging.standards.message.v1.SystemId;
+import com.ft.methodeimagesetmapper.exception.IngesterException;
 import com.ft.methodeimagesetmapper.model.EomFile;
 import com.ft.methodeimagesetmapper.service.ContentMapper;
 import com.ft.methodeimagesetmapper.validation.PublishingValidator;
@@ -14,6 +16,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
@@ -38,6 +41,8 @@ public class NativeCmsPublicationEventsListenerTest {
 
     private NativeCmsPublicationEventsListener listener;
 
+    private NativeCmsPublicationEventsListener errorListener;
+
     @Mock
     private ContentMapper mapper;
 
@@ -47,9 +52,19 @@ public class NativeCmsPublicationEventsListenerTest {
     @Mock
     private PublishingValidator publishingValidator;
 
+    @Mock
+    private ObjectMapper objectMapper;
+
+    @Mock
+    private ObjectReader objectReader;
+
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         listener = new NativeCmsPublicationEventsListener(SYSTEM_CODE, mapper, JACKSON_MAPPER, uuidValidator, publishingValidator);
+
+        when(objectMapper.reader(EomFile.class)).thenReturn(objectReader);
+        when(objectReader.readValue(anyString())).thenThrow(IOException.class);
+        errorListener = new NativeCmsPublicationEventsListener(SYSTEM_CODE, mapper, objectMapper, uuidValidator, publishingValidator);
     }
 
     @Test
@@ -95,6 +110,16 @@ public class NativeCmsPublicationEventsListenerTest {
         msg.setOriginSystemId(SystemId.systemIdFromCode("foo"));
         assertThat(listener.onMessage(msg, TX_ID), is(true));
         verifyZeroInteractions(mapper);
+    }
+
+    @Test(expected = IngesterException.class)
+    public void thatMapperThrowsExceptionWhenMessageCannotBeParsed() throws Exception {
+        Date lastModified = new Date();
+        Message message = new Message();
+        message.setOriginSystemId(SystemId.systemIdFromCode(SYSTEM_CODE));
+        message.setMessageTimestamp(lastModified);
+        message.setMessageBody(JACKSON_MAPPER.writeValueAsString(createSampleMethodeImage()));
+        errorListener.onMessage(message, TX_ID);
     }
 
     private EomFile createSampleMethodeImage() throws Exception {

@@ -19,7 +19,7 @@ EXPOSE 8080 8081
 CMD java $JAVA_OPTS \
      -Ddw.server.applicationConnectors[0].port=8080 \
      -Ddw.server.adminConnectors[0].port=8081 \
-     -Ddw.binaryTransformer.hostAddress=$VULCAN_HOST:8080 \
-     -Ddw.externalBinaryUrlBasePath=$S3_URL \
+     -Ddw.consumer.messageConsumer.queueProxyHost=http://$KAFKA_PROXY \
+     -Ddw.producer.messageProducer.proxyHostAndPort=$KAFKA_PROXY \
      -Ddw.logging.appenders[0].logFormat="%-5p [%d{ISO8601, GMT}] %c: %X{transaction_id} %replace(%m%n[%thread]%xEx){'\n', '|'}%nopex%n" \
      -jar methode-image-set-mapper.jar server config.yaml
