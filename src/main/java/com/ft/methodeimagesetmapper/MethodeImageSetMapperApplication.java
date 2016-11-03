@@ -68,7 +68,7 @@ public class MethodeImageSetMapperApplication extends Application<MethodeImageSe
         startListener(environment, listener, consumerConfig, consumerClient);
     }
 
-    private MessageProducer configureMessageProducer(Environment environment, ProducerConfiguration config) {
+    protected MessageProducer configureMessageProducer(Environment environment, ProducerConfiguration config) {
         JerseyClientConfiguration jerseyConfig = config.getJerseyClientConfiguration();
         jerseyConfig.setGzipEnabled(false);
         jerseyConfig.setGzipEnabledForRequests(false);
@@ -97,7 +97,7 @@ public class MethodeImageSetMapperApplication extends Application<MethodeImageSe
         return new NativeCmsPublicationEventsListener(config.getSystemCode(), contentMapper, objectMapper, uuidValidator, publishingValidator);
     }
 
-    private void startListener(Environment environment, MessageListener listener, ConsumerConfiguration config, Client consumerClient) {
+    protected void startListener(Environment environment, MessageListener listener, ConsumerConfiguration config, Client consumerClient) {
         final MessageQueueConsumerInitializer messageQueueConsumerInitializer =
                 new MessageQueueConsumerInitializer(config.getMessageQueueConsumerConfiguration(),
                         listener, consumerClient);

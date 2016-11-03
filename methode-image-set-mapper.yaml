@@ -7,7 +7,7 @@ consumer:
     queueProxyHost: http://localhost:8080
     queue: kafka
     topicName: NativeCmsPublicationEvents
-    groupName: MethodeImageModelMapper
+    groupName: MethodeImageSetMapper
     backoffPeriod: 10000
     streamCount: 1
     autoCommit: true
@@ -15,7 +15,7 @@ consumer:
   healthCheck:
     name: "Can connect consumer to kafka-proxy"
     severity: 2
-    businessImpact: "Newly published WordPress featured images will not be available from the Content API"
+    businessImpact: "Newly published image sets will not be available from the Content API"
     technicalSummary: "Tests that kafka-proxy is reachable and message can be consumed"
     panicGuideUrl: "https://panic.example.org/"
   systemCode: methode-web-pub
@@ -32,7 +32,7 @@ producer:
     healthCheck:
       name: "Can connect producer to kafka-proxy"
       severity: 2
-      businessImpact: "Newly published WordPress featured images will not be available from the Content API"
+      businessImpact: "Newly published image sets will not be available from the Content API"
       technicalSummary: "Tests that kafka-proxy is reachable and the CmsPublicationEvents topic exists"
       panicGuideUrl: "https://panic.example.org/"
 

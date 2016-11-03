@@ -12,8 +12,6 @@ server:
       - type: console
         # The timezone used to format dates. HINT: USE THE DEFAULT, UTC.
         timeZone: UTC
-        # The timezone used to format dates. HINT: USE THE DEFAULT, UTC.
-        timeZone: UTC
 
 logging:
   level: INFO
@@ -22,3 +20,41 @@ logging:
   appenders:
     - type: console
       logFormat: "%-5p [%d{ISO8601, GMT}] %c: %X{transaction_id} %m [%thread]%n%xEx"
+
+consumer:
+  jerseyClient:
+    connectionTimeout: 2 seconds
+    timeout: 25 seconds
+  messageConsumer:
+    queueProxyHost: http://localhost:22042
+    topicName: NativeCmsPublicationEvents
+    groupName: MethodeImageSetMapper
+    backoffPeriod: 10000
+    streamCount: 1
+    autoCommit: true
+    offsetReset: largest
+  healthCheck:
+    name: "Can connect consumer to kafka-proxy"
+    severity: 2
+    businessImpact: "Newly published Methode image sets will not be available from the Content API"
+    technicalSummary: "Tests that kafka-proxy is reachable and message can be consumed"
+    panicGuideUrl: ""
+  systemCode: methode-web-pub
+
+producer:
+  jerseyClient:
+    connectionTimeout: 2 seconds
+    timeout: 25 seconds
+  messageProducer:
+    proxyHostAndPort: localhost:22042
+    additionalHeaders:
+      Host: kafka
+    topicName: CmsPublicationEvents
+  healthCheck:
+    name: "Can connect producer to kafka-proxy"
+    severity: 2
+    businessImpact: "Newly published Methode image sets will not be available from the Content API"
+    technicalSummary: "Tests that kafka-proxy is reachable and the CmsPublicationEvents topic exists"
+    panicGuideUrl: ""
+
+contentUriPrefix: http://methode-image-model-mapper.svc.ft.com/image-set/model
