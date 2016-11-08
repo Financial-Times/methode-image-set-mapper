@@ -10,7 +10,7 @@ import com.ft.messaging.standards.message.v1.MessageType;
 import com.ft.messaging.standards.message.v1.SystemId;
 import com.ft.methodeimagesetmapper.exception.ContentMapperException;
 import com.ft.methodeimagesetmapper.model.EomFile;
-import com.ft.methodeimagesetmapper.service.ContentMapper;
+import com.ft.methodeimagesetmapper.service.MethodeImageSetMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -44,7 +44,7 @@ public class MessageProducingContentMapperTest {
     private MessageProducingContentMapper mapper;
 
     @Mock
-    private ContentMapper delegate;
+    private MethodeImageSetMapper delegate;
     @Mock
     private MessageProducer producer;
     @Mock

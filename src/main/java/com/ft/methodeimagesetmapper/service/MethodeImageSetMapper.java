@@ -30,9 +30,7 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.UUID;
 
-import static com.ft.methodeimagesetmapper.util.ImageSetUuidGenerator.fromImageUuid;
-
-public class MethodeImageSetMapper implements ContentMapper {
+public class MethodeImageSetMapper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodeImageSetMapper.class);
     private static final String IMAGE_TYPE = "Image";
@@ -42,7 +40,6 @@ public class MethodeImageSetMapper implements ContentMapper {
     private static final String FORMAT_UNSUPPORTED = "%s is not an %s.";
     private static final String DATE_FORMAT = "yyyyMMddHHmmss";
 
-    @Override
     public Content mapImageSet(String uuid, EomFile eomFile, String transactionId, Date lastModifiedDate) {
         return transformAndHandleExceptions(eomFile, () -> transformEomFileToContent(uuid, eomFile, transactionId, lastModifiedDate)
                 .withMembers(ImmutableSortedSet.of(new Member(eomFile.getUuid())))
@@ -86,7 +83,7 @@ public class MethodeImageSetMapper implements ContentMapper {
 
             copyrightNotice = firstOf(onlineCopyright, manualCopyright);
 
-            if(copyrightNotice!=null && !copyrightNotice.contains("©")) {
+            if (copyrightNotice != null && !copyrightNotice.contains("©")) {
                 copyrightNotice = "© " + copyrightNotice;
             }
 
@@ -131,10 +128,10 @@ public class MethodeImageSetMapper implements ContentMapper {
     }
 
     private String firstOf(String... strings) {
-        for(String raw : strings) {
-            if(!Strings.isNullOrEmpty(raw)) {
+        for (String raw : strings) {
+            if (!Strings.isNullOrEmpty(raw)) {
                 String trimmed = raw.trim();
-                if(!Strings.isNullOrEmpty(trimmed)) {
+                if (!Strings.isNullOrEmpty(trimmed)) {
                     return trimmed;
                 }
             }

@@ -6,7 +6,6 @@ import com.ft.messaging.standards.message.v1.Message;
 import com.ft.messaging.standards.message.v1.SystemId;
 import com.ft.methodeimagesetmapper.exception.IngesterException;
 import com.ft.methodeimagesetmapper.model.EomFile;
-import com.ft.methodeimagesetmapper.service.ContentMapper;
 import com.ft.methodeimagesetmapper.validation.PublishingValidator;
 import com.ft.methodeimagesetmapper.validation.UuidValidator;
 import org.junit.Before;
@@ -44,7 +43,7 @@ public class NativeCmsPublicationEventsListenerTest {
     private NativeCmsPublicationEventsListener errorListener;
 
     @Mock
-    private ContentMapper mapper;
+    private MessageProducingContentMapper mapper;
 
     @Mock
     private UuidValidator uuidValidator;

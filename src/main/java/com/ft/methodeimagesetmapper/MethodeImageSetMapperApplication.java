@@ -15,7 +15,6 @@ import com.ft.methodeimagesetmapper.configuration.ProducerConfiguration;
 import com.ft.methodeimagesetmapper.health.CanConnectToMessageQueueProducerProxyHealthcheck;
 import com.ft.methodeimagesetmapper.messaging.MessageProducingContentMapper;
 import com.ft.methodeimagesetmapper.messaging.NativeCmsPublicationEventsListener;
-import com.ft.methodeimagesetmapper.service.ContentMapper;
 import com.ft.methodeimagesetmapper.service.MethodeImageSetMapper;
 import com.ft.methodeimagesetmapper.validation.PublishingValidator;
 import com.ft.methodeimagesetmapper.validation.UuidValidator;
@@ -55,15 +54,20 @@ public class MethodeImageSetMapperApplication extends Application<MethodeImageSe
 
         final UriBuilder contentUriBuilder = UriBuilder.fromUri(configuration.getContentUriPrefix()).path("{uuid}");
 
-        ContentMapper imageModelMapper = new MethodeImageSetMapper();
-        ContentMapper contentMapper = new MessageProducingContentMapper(
+        MethodeImageSetMapper imageModelMapper = new MethodeImageSetMapper();
+        MessageProducingContentMapper contentMapper = new MessageProducingContentMapper(
                 imageModelMapper,
                 objectMapper, consumerConfig.getSystemCode(),
                 producer, contentUriBuilder);
 
         Client consumerClient = getConsumerClient(environment, consumerConfig);
 
-        MessageListener listener = configureMessageConsumer(consumerConfig, contentMapper, objectMapper, new UuidValidator(), new PublishingValidator());
+        MessageListener listener = new NativeCmsPublicationEventsListener(
+                consumerConfig.getSystemCode(),
+                contentMapper,
+                objectMapper,
+                new UuidValidator(),
+                new PublishingValidator());
 
         startListener(environment, listener, consumerConfig, consumerClient);
     }
@@ -92,11 +96,6 @@ public class MethodeImageSetMapperApplication extends Application<MethodeImageSe
         return producer;
     }
 
-    private MessageListener configureMessageConsumer(ConsumerConfiguration config, ContentMapper contentMapper, ObjectMapper objectMapper,
-                                                     UuidValidator uuidValidator, PublishingValidator publishingValidator) {
-        return new NativeCmsPublicationEventsListener(config.getSystemCode(), contentMapper, objectMapper, uuidValidator, publishingValidator);
-    }
-
     protected void startListener(Environment environment, MessageListener listener, ConsumerConfiguration config, Client consumerClient) {
         final MessageQueueConsumerInitializer messageQueueConsumerInitializer =
                 new MessageQueueConsumerInitializer(config.getMessageQueueConsumerConfiguration(),
@@ -109,7 +108,6 @@ public class MethodeImageSetMapperApplication extends Application<MethodeImageSe
                 ));
 
         environment.lifecycle().manage(messageQueueConsumerInitializer);
-        registerConsumerHealthcheck(environment, config, messageQueueConsumerInitializer);
     }
 
     private Client getConsumerClient(Environment environment, ConsumerConfiguration config) {
@@ -122,13 +120,5 @@ public class MethodeImageSetMapperApplication extends Application<MethodeImageSe
                 .usingDNS()
                 .named("consumer-client")
                 .build();
-    }
-
-    private void registerConsumerHealthcheck(Environment environment, ConsumerConfiguration config, MessageQueueConsumerInitializer messageQueueConsumerInitializer) {
-        HealthCheckRegistry healthchecks = environment.healthChecks();
-        healthchecks.register("KafkaProxyConsumer",
-                messageQueueConsumerInitializer.buildPassiveConsumerHealthcheck(
-                        config.getHealthcheckConfiguration(), environment.metrics()
-                ));
     }
 }

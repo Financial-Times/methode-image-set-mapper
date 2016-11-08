@@ -1,4 +1,3 @@
-
 consumer:
   jerseyClient:
     connectionTimeout: 2 seconds
