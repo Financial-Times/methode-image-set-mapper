@@ -59,8 +59,7 @@ public class NativeCmsPublicationEventsListener implements MessageListener {
                 throw new IngesterException("Unable to parse Methode content message", e);
             }
         } else {
-            LOG.info("skip message");
-            LOG.debug("skip message {}", message);
+            LOG.info("Skip message from [{}]", message.getOriginSystemId());
         }
         return true;
     }

@@ -16,7 +16,7 @@ consumer:
     severity: 2
     businessImpact: "Newly published image sets will not be available from the Content API"
     technicalSummary: "Tests that kafka-proxy is reachable and message can be consumed"
-    panicGuideUrl: "https://panic.example.org/"
+    panicGuideUrl: "https://sites.google.com/a/ft.com/ft-technology-service-transition/home/run-book-library/methode-image-set-mapper"
   systemCode: methode-web-pub
 
 producer:
@@ -33,7 +33,7 @@ producer:
       severity: 2
       businessImpact: "Newly published image sets will not be available from the Content API"
       technicalSummary: "Tests that kafka-proxy is reachable and the CmsPublicationEvents topic exists"
-      panicGuideUrl: "https://panic.example.org/"
+      panicGuideUrl: "https://sites.google.com/a/ft.com/ft-technology-service-transition/home/run-book-library/methode-image-set-mapper"
 
 contentUriPrefix: http://methode-image-model-mapper.svc.ft.com/image-set/model
 
