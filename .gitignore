@@ -1,0 +1,8 @@
+/target/
+/bin/
+/.classpath
+/.project
+/.settings/
+/config-component-tests.yml
+/.idea
+*.iml

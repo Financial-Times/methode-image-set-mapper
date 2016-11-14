@@ -1,0 +1,61 @@
+consumer:
+  jerseyClient:
+    connectionTimeout: 2 seconds
+    timeout: 25 seconds
+  messageConsumer:
+    queueProxyHost: http://localhost:8080
+    queue: kafka
+    topicName: NativeCmsPublicationEvents
+    groupName: MethodeImageSetMapper
+    backoffPeriod: 10000
+    streamCount: 1
+    autoCommit: true
+    offsetReset: largest
+  healthCheck:
+    name: "Can connect consumer to kafka-proxy"
+    severity: 2
+    businessImpact: "Newly published image sets will not be available from the Content API"
+    technicalSummary: "Tests that kafka-proxy is reachable and message can be consumed"
+    panicGuideUrl: "https://sites.google.com/a/ft.com/ft-technology-service-transition/home/run-book-library/methode-image-set-mapper"
+  systemCode: methode-web-pub
+
+producer:
+    jerseyClient:
+      connectionTimeout: 2 seconds
+      timeout: 25 seconds
+    messageProducer:
+      proxyHostAndPort: localhost:8080
+      additionalHeaders:
+        Host: kafka
+      topicName: CmsPublicationEvents
+    healthCheck:
+      name: "Can connect producer to kafka-proxy"
+      severity: 2
+      businessImpact: "Newly published image sets will not be available from the Content API"
+      technicalSummary: "Tests that kafka-proxy is reachable and the CmsPublicationEvents topic exists"
+      panicGuideUrl: "https://sites.google.com/a/ft.com/ft-technology-service-transition/home/run-book-library/methode-image-set-mapper"
+
+contentUriPrefix: http://methode-image-model-mapper.svc.ft.com/image-set/model
+
+server:
+  applicationConnectors:
+    - type: http
+      port: 16080
+
+  adminConnectors:
+    - type: http
+      port: 16081
+
+  requestLog:
+    appenders:
+      - type: console
+        # The timezone used to format dates. HINT: USE THE DEFAULT, UTC.
+        timeZone: UTC
+
+logging:
+  level: INFO
+  loggers:
+    io.dropwizard: DEBUG
+  appenders:
+    - type: console
+      logFormat: "%-5p [%d{ISO8601, GMT}] %c: %X{transaction_id} %m [%thread]%n%xEx"

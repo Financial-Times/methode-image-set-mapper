@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE meta SYSTEM "/SysConfig/Classify/FTImages/classify.dtd">
+<meta>
+    <picture>
+        <caption></caption>
+        <category></category>
+        <keywords></keywords>
+        <adinfo></adinfo>
+        <photographer></photographer>
+        <copyright_info>
+            <copyright_statement></copyright_statement>
+            <copyright_group></copyright_group>
+            <distribution_rights></distribution_rights>
+            <legal_status></legal_status>
+        </copyright_info>
+        <web_information>
+            <caption>Fruits of the soul</caption>
+            <alt_tag>Picture with fruits</alt_tag>
+            <online-source>Bloomberg News</online-source>
+            <manual-source>Some manual source here</manual-source>
+            <DIFTcomWebType>graphic</DIFTcomWebType>
+        </web_information>
+        <provider></provider>
+        <film_type></film_type>
+        <date_taken></date_taken>
+        <date_received></date_received>
+        <reference_num></reference_num>
+        <roll_num></roll_num>
+        <frame_num></frame_num>
+        <checkboxes></checkboxes>
+        <warnings></warnings>
+        <security></security>
+        <embargo_date></embargo_date>
+        <job_description>
+            <city></city>
+            <province></province>
+            <country></country>
+            <instructions></instructions>
+        </job_description>
+        <price></price>
+        <filename></filename>
+        <basket></basket>
+        <source></source>
+        <byline></byline>
+        <headline></headline>
+        <uuid>d7625378-d4cd-11e2-bce1-002128161462</uuid>
+        <ratio>1.78</ratio>
+        <imageType>Master_2048x1152</imageType>
+    </picture>
+    <markDeleted>False</markDeleted>
+</meta>
