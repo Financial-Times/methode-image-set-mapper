@@ -16,7 +16,7 @@ RUN apk --update add git \
 
 EXPOSE 8080 8081
 
-CMD java $JAVA_OPTS \
+CMD exec java $JAVA_OPTS \
      -Ddw.server.applicationConnectors[0].port=8080 \
      -Ddw.server.adminConnectors[0].port=8081 \
      -Ddw.consumer.messageConsumer.queueProxyHost=http://$KAFKA_PROXY \
