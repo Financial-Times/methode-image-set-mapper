@@ -12,7 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <dw.version>0.7.1</dw.version>
-        <jaxrs-build-info-resource.version>1.1</jaxrs-build-info-resource.version>
+        <jaxrs-build-info-resource.version>1.1.1</jaxrs-build-info-resource.version>
         <junit.version>4.11</junit.version>
         <mockito-core.version>1.9.5</mockito-core.version>
         <!-- Plugins -->
@@ -23,10 +23,10 @@
         <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
         <maven-shade-plugin.version>.</maven-shade-plugin.version>
         <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
-        <ft-build-info-maven-plugin.version>1.0</ft-build-info-maven-plugin.version>
+        <ft-build-info-maven-plugin.version>1.0.2</ft-build-info-maven-plugin.version>
         <maven-jar-plugin.version>2.3.2</maven-jar-plugin.version>
         <target-jdk>1.8</target-jdk>
-        <resilient-jersey-wrapper.version>0.3.70</resilient-jersey-wrapper.version>
+        <resilient-jersey-wrapper.version>0.4.0</resilient-jersey-wrapper.version>
         <surefire.plugin.version>2.18.1</surefire.plugin.version>
     </properties>
 
@@ -63,7 +63,7 @@
         <dependency>
             <groupId>com.github.Financial-Times</groupId>
             <artifactId>jax-rs-build-info-resource</artifactId>
-            <version>1.1.1</version>
+            <version>${jaxrs-build-info-resource.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.Financial-Times</groupId>
@@ -83,7 +83,7 @@
         <dependency>
             <groupId>com.github.Financial-Times</groupId>
             <artifactId>resilient-jersey-wrapper</artifactId>
-            <version>0.4.0</version>
+            <version>${resilient-jersey-wrapper.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.Financial-Times</groupId>
@@ -242,7 +242,7 @@
             <plugin>
                 <groupId>com.github.Financial-Times</groupId>
                 <artifactId>ft-build-info-maven-plugin</artifactId>
-                <version>1.0.2</version>
+                <version>${ft-build-info-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>
