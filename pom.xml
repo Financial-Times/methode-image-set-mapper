@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ft.methodeimagesetmapper</groupId>
+    <groupId>com.github.Financial-Times</groupId>
     <artifactId>methode-image-set-mapper</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -30,6 +30,25 @@
         <surefire.plugin.version>2.18.1</surefire.plugin.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>http://repo1.maven.org/maven2</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>ft-plugin-releases</id>
+            <url>https://jitpack.io</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+
     <dependencies>
         <dependency>
             <groupId>io.dropwizard</groupId>
@@ -42,14 +61,14 @@
             <version>${dw.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.ft</groupId>
-            <artifactId>jaxrs-build-info-resource</artifactId>
-            <version>${jaxrs-build-info-resource.version}</version>
+            <groupId>com.github.Financial-Times</groupId>
+            <artifactId>jax-rs-build-info-resource</artifactId>
+            <version>1.1.1</version>
         </dependency>
         <dependency>
-            <groupId>com.ft</groupId>
+            <groupId>com.github.Financial-Times</groupId>
             <artifactId>content-model</artifactId>
-            <version>0.1.33</version>
+            <version>0.1.40</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.hibernate</groupId>
@@ -62,19 +81,19 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.ft.resilient-jersey-wrapper</groupId>
+            <groupId>com.github.Financial-Times</groupId>
             <artifactId>resilient-jersey-wrapper</artifactId>
-            <version>${resilient-jersey-wrapper.version}</version>
+            <version>0.4.0</version>
         </dependency>
         <dependency>
-            <groupId>com.ft</groupId>
+            <groupId>com.github.Financial-Times</groupId>
             <artifactId>message-queue-consumer</artifactId>
-            <version>1.8.1</version>
+            <version>1.8.2</version>
         </dependency>
         <dependency>
-            <groupId>com.ft</groupId>
+            <groupId>com.github.Financial-Times</groupId>
             <artifactId>message-queue-producer</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.4.1</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -221,13 +240,13 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>com.ft.maven.plugins</groupId>
+                <groupId>com.github.Financial-Times</groupId>
                 <artifactId>ft-build-info-maven-plugin</artifactId>
-                <version>${ft-build-info-maven-plugin.version}</version>
+                <version>1.0.2</version>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>generate-build-info</goal>
+                            <goal>write-build-info-properties</goal>
                         </goals>
                     </execution>
                 </executions>

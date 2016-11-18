@@ -31,7 +31,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
-public class MethodeImageModelMapperApplicationTest {
+public class MethodeImageSetMapperApplicationTest {
 
     private static final String CONFIG_FILE = "methode-image-set-mapper-test.yaml";
     private static final String TRANSACTION_ID = "tid_ptvw9xpnhv";
