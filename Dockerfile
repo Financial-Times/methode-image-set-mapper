@@ -1,12 +1,10 @@
-FROM up-registry.ft.com/coco/dropwizardbase
+FROM coco/dropwizardbase:0.7.x-mvn333
 
-ADD . /
+COPY . /
 
 RUN apk --update add git \
  && HASH=$(git log -1 --pretty=format:%H) \
- && BUILD_NUMBER=$(cat ../buildnum.txt) \
- && BUILD_URL=$(cat ../buildurl.txt) \
- && mvn install -Dbuild.git.revision=$HASH -Dbuild.git.revision=$HASH -Dbuild.number=$BUILD_NUMBER -Dbuild.url=$BUILD_URL -Djava.net.preferIPv4Stack=true \
+ && mvn install -Dbuild.git.revision=$HASH -Djava.net.preferIPv4Stack=true \
  && rm -f target/methode-image-set-mapper-*sources.jar \
  && mv target/methode-image-set-mapper-*.jar /methode-image-set-mapper.jar \
  && mv methode-image-set-mapper.yaml /config.yaml \
