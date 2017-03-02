@@ -245,6 +245,7 @@
                 <version>${ft-build-info-maven-plugin.version}</version>
                 <executions>
                     <execution>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>write-build-info-properties</goal>
                         </goals>
