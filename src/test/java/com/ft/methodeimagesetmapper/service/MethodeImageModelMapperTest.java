@@ -113,7 +113,7 @@ public class MethodeImageModelMapperTest {
         assertThat(content.getInternalBinaryUrl(), nullValue());
         assertThat(content.getPublishReference(), equalTo(TRANSACTION_ID));
         assertThat(content.getFirstPublishedDate(), nullValue());
-        assertThat(content.getCanBeDistributed(), nullValue());
+        assertThat(content.getCanBeDistributed(), equalTo(Distribution.VERIFY));
     }
 
     @Test
