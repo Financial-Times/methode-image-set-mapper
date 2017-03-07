@@ -68,7 +68,7 @@
         <dependency>
             <groupId>com.github.Financial-Times</groupId>
             <artifactId>content-model</artifactId>
-            <version>0.1.41</version>
+            <version>0.1.46</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.hibernate</groupId>

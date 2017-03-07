@@ -1,6 +1,7 @@
 package com.ft.methodeimagesetmapper.service;
 
 import com.ft.content.model.Content;
+import com.ft.content.model.Distribution;
 import com.ft.content.model.Member;
 import com.ft.methodeimagesetmapper.exception.MethodeContentNotSupportedException;
 import com.ft.methodeimagesetmapper.exception.TransformationException;
@@ -86,6 +87,7 @@ public class MethodeImageModelMapperTest {
         assertThat(content.getPixelHeight(), nullValue());
         assertThat(content.getPublishReference(), equalTo(TRANSACTION_ID));
         assertThat(content.getFirstPublishedDate(), equalTo(new Date(1412088300000l)));
+        assertThat(content.getCanBeDistributed(), equalTo(Distribution.VERIFY));
     }
 
     @Test
@@ -111,6 +113,7 @@ public class MethodeImageModelMapperTest {
         assertThat(content.getInternalBinaryUrl(), nullValue());
         assertThat(content.getPublishReference(), equalTo(TRANSACTION_ID));
         assertThat(content.getFirstPublishedDate(), nullValue());
+        assertThat(content.getCanBeDistributed(), nullValue());
     }
 
     @Test
