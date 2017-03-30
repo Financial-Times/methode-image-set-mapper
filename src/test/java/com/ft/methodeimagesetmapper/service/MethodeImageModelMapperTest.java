@@ -33,6 +33,7 @@ public class MethodeImageModelMapperTest {
     private static final Date LAST_MODIFIED_DATE = new Date(300L);
     private static final String FORMAT_UNSUPPORTED = "%s is not an %s.";
     private static final String IMAGE_SET_UUID = fromImageUuid(java.util.UUID.fromString(UUID)).toString();
+    private static final String IMAGE_SET_TYPE = "ImageSet";
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -76,6 +77,7 @@ public class MethodeImageModelMapperTest {
         final Content content = methodeImageSetMapper.mapImageSet(IMAGE_SET_UUID, eomFile, TRANSACTION_ID, LAST_MODIFIED_DATE);
 
         assertThat(content.getUuid(), equalTo(IMAGE_SET_UUID));
+        assertThat(content.getType(), equalTo(IMAGE_SET_TYPE));
         assertThat(content.getIdentifiers().first().getAuthority(), equalTo(METHODE_IDENTIFIER_AUTHORITY));
         assertThat(content.getIdentifiers().first().getIdentifierValue(), equalTo(IMAGE_SET_UUID));
         assertThat(content.getTitle(), equalTo("Fruits of the soul"));
@@ -101,6 +103,7 @@ public class MethodeImageModelMapperTest {
         final Content content = methodeImageSetMapper.mapImageSet(IMAGE_SET_UUID, eomFile, TRANSACTION_ID, LAST_MODIFIED_DATE);
 
         assertThat(content.getUuid(), equalTo(IMAGE_SET_UUID));
+        assertThat(content.getType(), equalTo(IMAGE_SET_TYPE));
         assertThat(content.getIdentifiers().first().getAuthority(), equalTo(METHODE_IDENTIFIER_AUTHORITY));
         assertThat(content.getIdentifiers().first().getIdentifierValue(), equalTo(IMAGE_SET_UUID));
         assertThat(content.getTitle(), equalTo("Fruits of the soul"));
@@ -128,6 +131,7 @@ public class MethodeImageModelMapperTest {
         final Content content = methodeImageSetMapper.mapImageSet(IMAGE_SET_UUID, eomFile, TRANSACTION_ID, LAST_MODIFIED_DATE);
 
         assertThat(content.getUuid(), equalTo(IMAGE_SET_UUID));
+        assertThat(content.getType(), equalTo(IMAGE_SET_TYPE));
         assertThat(content.getIdentifiers().first().getAuthority(), equalTo(METHODE_IDENTIFIER_AUTHORITY));
         assertThat(content.getIdentifiers().first().getIdentifierValue(), equalTo(IMAGE_SET_UUID));
         assertThat(content.getMembers(), equalTo(ImmutableSortedSet.of(new Member(UUID))));
@@ -142,6 +146,7 @@ public class MethodeImageModelMapperTest {
         final Content content = methodeImageSetMapper.mapImageSet(IMAGE_SET_UUID, eomFile, TRANSACTION_ID, LAST_MODIFIED_DATE);
 
         assertThat(content.getUuid(), equalTo(IMAGE_SET_UUID));
+        assertThat(content.getType(), equalTo(IMAGE_SET_TYPE));
         assertThat(content.getIdentifiers().first().getAuthority(), equalTo(METHODE_IDENTIFIER_AUTHORITY));
         assertThat(content.getIdentifiers().first().getIdentifierValue(), equalTo(IMAGE_SET_UUID));
         assertThat(content.getMembers(), equalTo(ImmutableSortedSet.of(new Member(UUID))));
