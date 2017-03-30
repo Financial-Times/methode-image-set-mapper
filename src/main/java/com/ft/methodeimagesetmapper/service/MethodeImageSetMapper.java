@@ -40,6 +40,7 @@ public class MethodeImageSetMapper {
     private static final String SOURCE_METHODE = "http://api.ft.com/system/FTCOM-METHODE";
     private static final String FORMAT_UNSUPPORTED = "%s is not an %s.";
     private static final String DATE_FORMAT = "yyyyMMddHHmmss";
+    private static final String IMAGE_SET_TYPE = "ImageSet";
 
     public Content mapImageSet(String uuid, EomFile eomFile, String transactionId, Date lastModifiedDate) {
         return transformAndHandleExceptions(eomFile, () -> transformEomFileToContent(uuid, eomFile, transactionId, lastModifiedDate)
@@ -116,6 +117,7 @@ public class MethodeImageSetMapper {
 
         return Content.builder()
                 .withUuid(UUID.fromString(uuid))
+                .withType(IMAGE_SET_TYPE)
                 .withIdentifiers(ImmutableSortedSet.of(new Identifier(SOURCE_METHODE, uuid)))
                 .withDescription(altText)
                 .withTitle(caption)
