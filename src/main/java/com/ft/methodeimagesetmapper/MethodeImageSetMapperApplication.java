@@ -17,7 +17,6 @@ import com.ft.methodeimagesetmapper.messaging.MessageProducingContentMapper;
 import com.ft.methodeimagesetmapper.messaging.NativeCmsPublicationEventsListener;
 import com.ft.methodeimagesetmapper.service.MethodeImageSetMapper;
 import com.ft.methodeimagesetmapper.validation.PublishingValidator;
-import com.ft.methodeimagesetmapper.validation.UuidValidator;
 import com.ft.platform.dropwizard.AdvancedHealthCheckBundle;
 import com.ft.platform.dropwizard.DefaultGoodToGoChecker;
 import com.ft.platform.dropwizard.GoodToGoBundle;
@@ -66,7 +65,6 @@ public class MethodeImageSetMapperApplication extends Application<MethodeImageSe
                 consumerConfig.getSystemCode(),
                 contentMapper,
                 objectMapper,
-                new UuidValidator(),
                 new PublishingValidator());
 
         startListener(environment, listener, consumerConfig, consumerClient);
