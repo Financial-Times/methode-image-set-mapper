@@ -6,8 +6,8 @@ import com.ft.content.model.Member;
 import com.ft.methodeimagesetmapper.exception.MethodeContentNotSupportedException;
 import com.ft.methodeimagesetmapper.exception.TransformationException;
 import com.ft.methodeimagesetmapper.model.EomFile;
-import com.ft.uuidutils.DeriveUuid;
-import com.ft.uuidutils.DeriveUuid.Salts;
+import com.ft.uuidutils.DeriveUUID;
+import com.ft.uuidutils.DeriveUUID.Salts;
 import com.google.common.collect.ImmutableSortedSet;
 import org.junit.Rule;
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class MethodeImageModelMapperTest {
     private static final String TRANSACTION_ID = "tid_ptvw9xpnhv";
     private static final Date LAST_MODIFIED_DATE = new Date(300L);
     private static final String FORMAT_UNSUPPORTED = "%s is not an %s.";
-    private static final String IMAGE_SET_UUID = DeriveUuid.with(Salts.IMAGE_SET).from(java.util.UUID.fromString(UUID)).toString();
+    private static final String IMAGE_SET_UUID = DeriveUUID.with(Salts.IMAGE_SET).from(java.util.UUID.fromString(UUID)).toString();
 
     @Rule
     public ExpectedException exception = ExpectedException.none();

@@ -7,8 +7,8 @@ import com.ft.messaging.standards.message.v1.SystemId;
 import com.ft.methodeimagesetmapper.exception.IngesterException;
 import com.ft.methodeimagesetmapper.model.EomFile;
 import com.ft.methodeimagesetmapper.validation.PublishingValidator;
-import com.ft.uuidutils.DeriveUuid;
-import com.ft.uuidutils.DeriveUuid.Salts;
+import com.ft.uuidutils.DeriveUUID;
+import com.ft.uuidutils.DeriveUUID.Salts;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,7 +36,7 @@ public class NativeCmsPublicationEventsListenerTest {
     private static final String TX_ID = "junittx";
     private static final ObjectMapper JACKSON_MAPPER = new ObjectMapper();
     private static final String UUID = "d7625378-d4cd-11e2-bce1-002128161462";
-    private static final String IMAGE_SET_UUID = DeriveUuid.with(Salts.IMAGE_SET).from(java.util.UUID.fromString(UUID)).toString();
+    private static final String IMAGE_SET_UUID = DeriveUUID.with(Salts.IMAGE_SET).from(java.util.UUID.fromString(UUID)).toString();
 
     private NativeCmsPublicationEventsListener listener;
 

@@ -7,8 +7,8 @@ import com.ft.messaging.standards.message.v1.SystemId;
 import com.ft.methodeimagesetmapper.exception.IngesterException;
 import com.ft.methodeimagesetmapper.model.EomFile;
 import com.ft.methodeimagesetmapper.validation.PublishingValidator;
-import com.ft.uuidutils.DeriveUuid;
-import com.ft.uuidutils.DeriveUuid.Salts;
+import com.ft.uuidutils.DeriveUUID;
+import com.ft.uuidutils.DeriveUUID.Salts;
 import com.ft.uuidutils.UuidValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +46,7 @@ public class NativeCmsPublicationEventsListener implements MessageListener {
                 UuidValidation.of(methodeContent.getUuid());
                 if (publishingValidator.isValidForPublishing(methodeContent)) {
                     final UUID methodeUuid = UUID.fromString(methodeContent.getUuid());
-                    final UUID imageSetUuid = DeriveUuid.with(Salts.IMAGE_SET).from(methodeUuid);
+                    final UUID imageSetUuid = DeriveUUID.with(Salts.IMAGE_SET).from(methodeUuid);
                     final String uuid = imageSetUuid.toString();
                     LOG.info("Importing content [{}] of type [{}] as image set [{}].",
                             methodeContent.getUuid(), methodeContent.getType(), uuid);
