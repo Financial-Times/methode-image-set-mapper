@@ -9,7 +9,7 @@ import com.ft.methodeimagesetmapper.model.EomFile;
 import com.ft.methodeimagesetmapper.validation.PublishingValidator;
 import com.ft.uuidutils.DeriveUUID;
 import com.ft.uuidutils.DeriveUUID.Salts;
-import com.ft.uuidutils.UuidValidation;
+import com.ft.uuidutils.UUIDValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +43,7 @@ public class NativeCmsPublicationEventsListener implements MessageListener {
 
             try {
                 EomFile methodeContent = objectMapper.reader(EomFile.class).readValue(message.getMessageBody());
-                UuidValidation.of(methodeContent.getUuid());
+                UUIDValidation.of(methodeContent.getUuid());
                 if (publishingValidator.isValidForPublishing(methodeContent)) {
                     final UUID methodeUuid = UUID.fromString(methodeContent.getUuid());
                     final UUID imageSetUuid = DeriveUUID.with(Salts.IMAGE_SET).from(methodeUuid);
