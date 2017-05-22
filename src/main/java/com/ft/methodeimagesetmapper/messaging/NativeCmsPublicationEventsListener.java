@@ -7,15 +7,15 @@ import com.ft.messaging.standards.message.v1.SystemId;
 import com.ft.methodeimagesetmapper.exception.IngesterException;
 import com.ft.methodeimagesetmapper.model.EomFile;
 import com.ft.methodeimagesetmapper.validation.PublishingValidator;
-import com.ft.methodeimagesetmapper.validation.UuidValidator;
+import com.ft.uuidutils.DeriveUUID;
+import com.ft.uuidutils.DeriveUUID.Salts;
+import com.ft.uuidutils.UUIDValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.UUID;
 import java.util.function.Predicate;
-
-import static com.ft.methodeimagesetmapper.util.ImageSetUuidGenerator.fromImageUuid;
 
 public class NativeCmsPublicationEventsListener implements MessageListener {
 
@@ -25,16 +25,14 @@ public class NativeCmsPublicationEventsListener implements MessageListener {
     private final MessageProducingContentMapper mapper;
     private final ObjectMapper objectMapper;
     private final SystemId systemId;
-    private final UuidValidator uuidValidator;
     private final PublishingValidator publishingValidator;
 
     public NativeCmsPublicationEventsListener(String systemCode, MessageProducingContentMapper mapper, ObjectMapper objectMapper,
-                                              UuidValidator uuidValidator, PublishingValidator publishingValidator) {
+                                              PublishingValidator publishingValidator) {
         this.systemId = SystemId.systemIdFromCode(systemCode);
         this.filter = msg -> (systemId.equals(msg.getOriginSystemId()));
         this.mapper = mapper;
         this.objectMapper = objectMapper;
-        this.uuidValidator = uuidValidator;
         this.publishingValidator = publishingValidator;
     }
 
@@ -45,9 +43,11 @@ public class NativeCmsPublicationEventsListener implements MessageListener {
 
             try {
                 EomFile methodeContent = objectMapper.reader(EomFile.class).readValue(message.getMessageBody());
-                uuidValidator.validate(methodeContent.getUuid());
+                UUIDValidation.of(methodeContent.getUuid());
                 if (publishingValidator.isValidForPublishing(methodeContent)) {
-                    String uuid = fromImageUuid(UUID.fromString(methodeContent.getUuid())).toString();
+                    final UUID methodeUuid = UUID.fromString(methodeContent.getUuid());
+                    final UUID imageSetUuid = DeriveUUID.with(Salts.IMAGE_SET).from(methodeUuid);
+                    final String uuid = imageSetUuid.toString();
                     LOG.info("Importing content [{}] of type [{}] as image set [{}].",
                             methodeContent.getUuid(), methodeContent.getType(), uuid);
                     LOG.info("Event for {}.", methodeContent.getUuid());

@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/Financial-Times/methode-image-set-mapper.svg?style=svg)](https://circleci.com/gh/Financial-Times/methode-image-set-mapper) [![Coverage Status](https://coveralls.io/repos/github/Financial-Times/methode-image-set-mapper/badge.svg)](https://coveralls.io/github/Financial-Times/methode-image-set-mapper)
+
 # Methode Image Set Mapper
 This is a web application which listens to the NativeCmsPublicationEvents Kafka topic for publishing events coming from Methode and process only the messages
 containing an image. It extracts the image metadata, creates a set of images containing only the published image and writes it to the CmsPublicationEvents 
