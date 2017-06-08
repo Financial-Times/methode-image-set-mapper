@@ -88,7 +88,7 @@ public class MethodeImageModelMapperTest {
         assertThat(content.getPixelHeight(), nullValue());
         assertThat(content.getPublishReference(), equalTo(TRANSACTION_ID));
         assertThat(content.getFirstPublishedDate(), equalTo(new Date(1412088300000l)));
-        assertThat(content.getCanBeDistributed(), equalTo(Distribution.VERIFY));
+        assertThat(content.getCanBeDistributed(), equalTo(Distribution.YES));
     }
 
     @Test
@@ -114,7 +114,7 @@ public class MethodeImageModelMapperTest {
         assertThat(content.getInternalBinaryUrl(), nullValue());
         assertThat(content.getPublishReference(), equalTo(TRANSACTION_ID));
         assertThat(content.getFirstPublishedDate(), nullValue());
-        assertThat(content.getCanBeDistributed(), equalTo(Distribution.VERIFY));
+        assertThat(content.getCanBeDistributed(), equalTo(Distribution.YES));
     }
 
     @Test
