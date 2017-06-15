@@ -12,7 +12,7 @@ import com.ft.methodeimagesetmapper.messaging.MessageProducingContentMapper;
 import com.ft.methodeimagesetmapper.model.EomFile;
 import com.ft.methodeimagesetmapper.service.MethodeImageSetMapper;
 import com.ft.methodeimagesetmapper.validation.PublishingValidator;
-import com.ft.methodeimagesetmapper.validation.UuidValidator;
+import com.ft.uuidutils.UUIDValidation;
 import java.util.Date;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -32,29 +32,25 @@ public class MethodeImageSetResource {
 
   private static final String CONTENT_TYPE_NOT_SUPPORTED = "Unsupported type - not an image set.";
   private static final String CONTENT_CANNOT_BE_MAPPED = "Content cannot be mapped.";
-  private static final String INVALID_UUID = "Invalid uuid";
   private static final String UNABLE_TO_WRITE_JSON_MESSAGE = "Unable to write JSON for message";
 
   private final MethodeImageSetMapper methodeImageSetMapper;
   private final MessageProducingContentMapper messageProducingContentMapper;
-  private final UuidValidator uuidValidator;
   private final PublishingValidator publishingValidator;
 
 
   public MethodeImageSetResource(MethodeImageSetMapper methodeImageSetMapper,
       MessageProducingContentMapper messageProducingContentMapper,
-      UuidValidator uuidValidator,
       PublishingValidator publishingValidator) {
     this.methodeImageSetMapper = methodeImageSetMapper;
     this.messageProducingContentMapper = messageProducingContentMapper;
-    this.uuidValidator = uuidValidator;
     this.publishingValidator = publishingValidator;
   }
 
   @POST
   @Path("/map")
   @Produces(MediaType.APPLICATION_JSON + CHARSET_UTF_8)
-  public final Content mapImageModel(EomFile methodeContent, @Context HttpHeaders httpHeaders) {
+  public final Content mapImageSet(EomFile methodeContent, @Context HttpHeaders httpHeaders) {
     LOGGER.info("Mapping content with uuid [{}]", methodeContent.getUuid());
     return getModelAndHandleExceptions(methodeContent, httpHeaders, (transactionId) ->
         methodeImageSetMapper
@@ -63,7 +59,7 @@ public class MethodeImageSetResource {
 
   @POST
   @Path("/ingest")
-  public final void ingestImageModel(EomFile methodeContent, @Context HttpHeaders httpHeaders) {
+  public final void ingestImageSet(EomFile methodeContent, @Context HttpHeaders httpHeaders) {
     LOGGER.info("Ingesting content with uuid [{}]", methodeContent.getUuid());
     getModelAndHandleExceptions(methodeContent, httpHeaders, (transactionId) ->
         messageProducingContentMapper
@@ -74,13 +70,13 @@ public class MethodeImageSetResource {
       Action<Content> getContentModel) {
     final String transactionId = TransactionIdUtils.getTransactionIdOrDie(headers);
     try {
-      uuidValidator.validate(methodeContent.getUuid());
+      UUIDValidation.of(methodeContent.getUuid());
       if (publishingValidator.isValidForPublishing(methodeContent)) {
         return getContentModel.perform(transactionId);
       }
       throw new TransformationException();
     } catch (IllegalArgumentException | ValidationException e) {
-      throw ClientError.status(422).error(INVALID_UUID).exception(e);
+      throw ClientError.status(422).error(e.getMessage()).exception(e);
     } catch (MethodeContentNotSupportedException e) {
       throw ClientError.status(422).error(CONTENT_TYPE_NOT_SUPPORTED).exception(e);
     } catch (TransformationException e) {

@@ -7,7 +7,8 @@ import com.ft.messaging.standards.message.v1.SystemId;
 import com.ft.methodeimagesetmapper.exception.IngesterException;
 import com.ft.methodeimagesetmapper.model.EomFile;
 import com.ft.methodeimagesetmapper.validation.PublishingValidator;
-import com.ft.methodeimagesetmapper.validation.UuidValidator;
+import com.ft.uuidutils.DeriveUUID;
+import com.ft.uuidutils.DeriveUUID.Salts;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +23,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
 
-import static com.ft.methodeimagesetmapper.util.ImageSetUuidGenerator.fromImageUuid;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
@@ -36,7 +36,7 @@ public class NativeCmsPublicationEventsListenerTest {
     private static final String TX_ID = "junittx";
     private static final ObjectMapper JACKSON_MAPPER = new ObjectMapper();
     private static final String UUID = "d7625378-d4cd-11e2-bce1-002128161462";
-    private static final String IMAGE_SET_UUID = fromImageUuid(java.util.UUID.fromString(UUID)).toString();
+    private static final String IMAGE_SET_UUID = DeriveUUID.with(Salts.IMAGE_SET).from(java.util.UUID.fromString(UUID)).toString();
 
     private NativeCmsPublicationEventsListener listener;
 
@@ -44,9 +44,6 @@ public class NativeCmsPublicationEventsListenerTest {
 
     @Mock
     private MessageProducingContentMapper mapper;
-
-    @Mock
-    private UuidValidator uuidValidator;
 
     @Mock
     private PublishingValidator publishingValidator;
@@ -59,11 +56,11 @@ public class NativeCmsPublicationEventsListenerTest {
 
     @Before
     public void setUp() throws IOException {
-        listener = new NativeCmsPublicationEventsListener(SYSTEM_CODE, mapper, JACKSON_MAPPER, uuidValidator, publishingValidator);
+        listener = new NativeCmsPublicationEventsListener(SYSTEM_CODE, mapper, JACKSON_MAPPER, publishingValidator);
 
         when(objectMapper.reader(EomFile.class)).thenReturn(objectReader);
         when(objectReader.readValue(anyString())).thenThrow(IOException.class);
-        errorListener = new NativeCmsPublicationEventsListener(SYSTEM_CODE, mapper, objectMapper, uuidValidator, publishingValidator);
+        errorListener = new NativeCmsPublicationEventsListener(SYSTEM_CODE, mapper, objectMapper, publishingValidator);
     }
 
     @Test

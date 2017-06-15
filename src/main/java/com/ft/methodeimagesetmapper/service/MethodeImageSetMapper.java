@@ -129,7 +129,7 @@ public class MethodeImageSetMapper {
                 .withCopyright(Copyright.noticeOnly(copyrightNotice))
                 .withMediaType(mediaType)
                 .withFirstPublishedDate(publishDate)
-                .withCanBeDistributed(Distribution.VERIFY);
+                .withCanBeDistributed(Distribution.YES);
     }
 
     private String firstOf(String... strings) {

@@ -13,6 +13,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <dw.version>0.7.1</dw.version>
         <jaxrs-build-info-resource.version>1.1.1</jaxrs-build-info-resource.version>
+        <resilient-jersey-wrapper.version>0.4.0</resilient-jersey-wrapper.version>
+        <uuid-utils.version>1.0.2</uuid-utils.version>
         <junit.version>4.11</junit.version>
         <mockito-core.version>1.9.5</mockito-core.version>
         <!-- Plugins -->
@@ -25,9 +27,11 @@
         <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
         <ft-build-info-maven-plugin.version>1.0.2</ft-build-info-maven-plugin.version>
         <maven-jar-plugin.version>2.3.2</maven-jar-plugin.version>
-        <target-jdk>1.8</target-jdk>
-        <resilient-jersey-wrapper.version>0.4.0</resilient-jersey-wrapper.version>
         <surefire.plugin.version>2.18.1</surefire.plugin.version>
+        <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
+        <!-- Misc -->
+        <target-jdk>1.8</target-jdk>
+        <argLine>-Djava.net.preferIPv4Stack=true</argLine>
     </properties>
 
     <repositories>
@@ -84,6 +88,11 @@
             <groupId>com.github.Financial-Times</groupId>
             <artifactId>resilient-jersey-wrapper</artifactId>
             <version>${resilient-jersey-wrapper.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.Financial-Times</groupId>
+            <artifactId>uuid-utils-java</artifactId>
+            <version>${uuid-utils.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.Financial-Times</groupId>
@@ -301,9 +310,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.plugin.version}</version>
-                <configuration>
-                    <argLine>-Djava.net.preferIPv4Stack=true</argLine>
-                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>${coveralls-maven-plugin.version}</version>
             </plugin>
         </plugins>
     </build>
