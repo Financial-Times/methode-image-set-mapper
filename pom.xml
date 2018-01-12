@@ -12,7 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <dw.version>0.7.1</dw.version>
-        <advanced-dropwizard-healthcheck.version>4.14.1</advanced-dropwizard-healthcheck.version>
+        <advanced-dropwizard-healthcheck.version>4.14.2</advanced-dropwizard-healthcheck.version>
         <jaxrs-build-info-resource.version>1.1.1</jaxrs-build-info-resource.version>
         <resilient-jersey-wrapper.version>0.4.0</resilient-jersey-wrapper.version>
         <uuid-utils.version>1.0.2</uuid-utils.version>
