@@ -1,5 +1,7 @@
 package com.ft.methodeimagesetmapper;
 
+import javax.ws.rs.core.UriBuilder;
+
 import com.codahale.metrics.health.HealthCheckRegistry;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ft.api.util.buildinfo.BuildInfoResource;
@@ -19,15 +21,14 @@ import com.ft.methodeimagesetmapper.service.MethodeImageSetMapper;
 import com.ft.methodeimagesetmapper.validation.PublishingValidator;
 import com.ft.platform.dropwizard.AdvancedHealthCheckBundle;
 import com.ft.platform.dropwizard.DefaultGoodToGoChecker;
-import com.ft.platform.dropwizard.GoodToGoBundle;
+import com.ft.platform.dropwizard.GoodToGoConfiguredBundle;
 import com.sun.jersey.api.client.Client;
+
 import io.dropwizard.Application;
 import io.dropwizard.client.JerseyClientConfiguration;
 import io.dropwizard.jersey.setup.JerseyEnvironment;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-
-import javax.ws.rs.core.UriBuilder;
 
 public class MethodeImageSetMapperApplication extends Application<MethodeImageSetMapperConfiguration> {
 
@@ -38,7 +39,7 @@ public class MethodeImageSetMapperApplication extends Application<MethodeImageSe
     @Override
     public void initialize(Bootstrap<MethodeImageSetMapperConfiguration> bootstrap) {
         bootstrap.addBundle(new AdvancedHealthCheckBundle());
-        bootstrap.addBundle(new GoodToGoBundle(new DefaultGoodToGoChecker()));
+        bootstrap.addBundle(new GoodToGoConfiguredBundle(new DefaultGoodToGoChecker()));
     }
 
     public void run(MethodeImageSetMapperConfiguration configuration, Environment environment) {
