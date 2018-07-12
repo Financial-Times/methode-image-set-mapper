@@ -1,8 +1,8 @@
-FROM coco/dropwizardbase:0.7.x-mvn333
+FROM openjdk:8-alpine
 
 COPY . /methode-image-set-mapper
 
-RUN apk --update add git \
+RUN apk --update add git maven \
  && cd methode-image-set-mapper \
  && HASH=$(git log -1 --pretty=format:%H) \
  && TAG=$(git tag -l --points-at $HASH) \
@@ -12,7 +12,7 @@ RUN apk --update add git \
  && rm -f target/methode-image-set-mapper-*sources.jar \
  && mv target/methode-image-set-mapper-*.jar /methode-image-set-mapper.jar \
  && mv methode-image-set-mapper.yaml /config.yaml \
- && apk del git \
+ && apk del git maven \
  && rm -rf /var/cache/apk/* \
  && rm -rf /root/.m2/*
 
