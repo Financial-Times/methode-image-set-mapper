@@ -1,7 +1,5 @@
 package com.ft.methodeimagesetmapper;
 
-import javax.ws.rs.core.UriBuilder;
-
 import com.codahale.metrics.health.HealthCheckRegistry;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ft.api.util.buildinfo.BuildInfoResource;
@@ -17,18 +15,20 @@ import com.ft.methodeimagesetmapper.configuration.ProducerConfiguration;
 import com.ft.methodeimagesetmapper.health.CanConnectToMessageQueueProducerProxyHealthcheck;
 import com.ft.methodeimagesetmapper.messaging.MessageProducingContentMapper;
 import com.ft.methodeimagesetmapper.messaging.NativeCmsPublicationEventsListener;
+import com.ft.methodeimagesetmapper.resource.MethodeImageSetResource;
 import com.ft.methodeimagesetmapper.service.MethodeImageSetMapper;
 import com.ft.methodeimagesetmapper.validation.PublishingValidator;
 import com.ft.platform.dropwizard.AdvancedHealthCheckBundle;
 import com.ft.platform.dropwizard.DefaultGoodToGoChecker;
 import com.ft.platform.dropwizard.GoodToGoConfiguredBundle;
 import com.sun.jersey.api.client.Client;
-
 import io.dropwizard.Application;
 import io.dropwizard.client.JerseyClientConfiguration;
 import io.dropwizard.jersey.setup.JerseyEnvironment;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+
+import javax.ws.rs.core.UriBuilder;
 
 public class MethodeImageSetMapperApplication extends Application<MethodeImageSetMapperConfiguration> {
 
@@ -54,20 +54,22 @@ public class MethodeImageSetMapperApplication extends Application<MethodeImageSe
 
         final UriBuilder contentUriBuilder = UriBuilder.fromUri(configuration.getContentUriPrefix()).path("{uuid}");
 
-        MethodeImageSetMapper imageModelMapper = new MethodeImageSetMapper();
+        MethodeImageSetMapper imageSetMapper = new MethodeImageSetMapper();
         MessageProducingContentMapper contentMapper = new MessageProducingContentMapper(
-                imageModelMapper,
+                imageSetMapper,
                 objectMapper, consumerConfig.getSystemCode(),
                 producer, contentUriBuilder);
-
-        Client consumerClient = getConsumerClient(environment, consumerConfig);
+        PublishingValidator publishingValidator = new PublishingValidator();
 
         MessageListener listener = new NativeCmsPublicationEventsListener(
                 consumerConfig.getSystemCode(),
                 contentMapper,
                 objectMapper,
-                new PublishingValidator());
+                publishingValidator);
 
+        jersey.register(new MethodeImageSetResource(imageSetMapper, contentMapper, publishingValidator));
+
+        Client consumerClient = getConsumerClient(environment, consumerConfig);
         startListener(environment, listener, consumerConfig, consumerClient);
     }
 
