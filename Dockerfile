@@ -1,11 +1,16 @@
-FROM openjdk:8u171-jdk-alpine3.8
+FROM openjdk:8u212-jdk-alpine3.9
 
 COPY . /methode-image-set-mapper
 
-RUN apk --update add git maven \
+ARG SONATYPE_USER
+ARG SONATYPE_PASSWORD
+
+RUN apk --update add git maven curl \
+ && mkdir /root/.m2/ \
+ && curl -v -o /root/.m2/settings.xml "https://raw.githubusercontent.com/Financial-Times/nexus-settings/master/public-settings.xml" \
  && cd methode-image-set-mapper \
  && HASH=$(git log -1 --pretty=format:%H) \
- && TAG=$(git tag -l --points-at $HASH) \
+ && TAG=$(git tag -l --points-at $HASH | head -n1) \
  && VERSION=${TAG:-untagged} \
  && mvn versions:set -DnewVersion=$VERSION \
  && mvn install -Dbuild.git.revision=$HASH -Djava.net.preferIPv4Stack=true \
