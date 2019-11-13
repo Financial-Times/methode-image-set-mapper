@@ -20,7 +20,7 @@
         <mockito-core.version>1.9.5</mockito-core.version>
         <!-- Plugins -->
         <maven-pmd-plugin.version>3.0.1</maven-pmd-plugin.version>
-        <jacoco-maven-plugin.version>0.7.4.201502262128</jacoco-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
         <maven-jxr-plugin.version>2.3</maven-jxr-plugin.version>
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
         <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
@@ -28,31 +28,12 @@
         <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
         <ft-build-info-maven-plugin.version>1.0.2</ft-build-info-maven-plugin.version>
         <maven-jar-plugin.version>2.3.2</maven-jar-plugin.version>
-        <surefire.plugin.version>2.18.1</surefire.plugin.version>
+        <surefire.plugin.version>2.22.2</surefire.plugin.version>
         <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
         <!-- Misc -->
         <target-jdk>1.8</target-jdk>
         <argLine>-Djava.net.preferIPv4Stack=true</argLine>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>central</id>
-            <url>http://repo1.maven.org/maven2</url>
-        </repository>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>ft-plugin-releases</id>
-            <url>https://jitpack.io</url>
-        </pluginRepository>
-    </pluginRepositories>
-
 
     <dependencies>
         <dependency>
@@ -101,14 +82,14 @@
             <version>${uuid-utils.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.Financial-Times</groupId>
+            <groupId>com.ft</groupId>
             <artifactId>message-queue-consumer</artifactId>
-            <version>1.8.2</version>
+            <version>1.9.0</version>
         </dependency>
         <dependency>
-            <groupId>com.github.Financial-Times</groupId>
+            <groupId>com.ft</groupId>
             <artifactId>message-queue-producer</artifactId>
-            <version>1.0.4.1</version>
+            <version>1.0.5</version>
         </dependency>
         <dependency>
             <groupId>com.github.Financial-Times.jax-rs-error-handling</groupId>
