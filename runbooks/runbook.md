@@ -1,4 +1,4 @@
-# UPP - Notifications read/write
+# UPP - Methode Image Set Mapper
 
 This service reads images from a Kafka queue and transforms them into UP format.
 
