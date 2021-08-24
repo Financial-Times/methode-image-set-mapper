@@ -12,8 +12,11 @@ import com.ft.methodeimagesetmapper.messaging.MessageProducingContentMapper;
 import com.ft.methodeimagesetmapper.model.EomFile;
 import com.ft.methodeimagesetmapper.service.MethodeImageSetMapper;
 import com.ft.methodeimagesetmapper.validation.PublishingValidator;
+import com.ft.uuidutils.DeriveUUID;
+import com.ft.uuidutils.DeriveUUID.Salts;
 import com.ft.uuidutils.UUIDValidation;
 import java.util.Date;
+import java.util.UUID;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -55,6 +58,26 @@ public class MethodeImageSetResource {
     return getModelAndHandleExceptions(methodeContent, httpHeaders, (transactionId) ->
         methodeImageSetMapper
             .mapImageSet(methodeContent.getUuid(), methodeContent, transactionId, new Date()));
+  }
+
+  @POST
+  @Path("/map2")
+  @Produces(MediaType.APPLICATION_JSON + CHARSET_UTF_8)
+  public final Content mapImageSetWithUUIDGen(EomFile methodeContent, @Context HttpHeaders httpHeaders) {
+    if (!publishingValidator.isValidForPublishing(methodeContent)) {
+      LOGGER.info("Skip message [{}] of type [{}]", methodeContent.getUuid(), methodeContent.getType());
+      throw ClientError.status(422).error(CONTENT_CANNOT_BE_MAPPED).exception();
+    } 
+      
+    final UUID methodeUuid = UUID.fromString(methodeContent.getUuid());
+    final UUID imageSetUuid = DeriveUUID.with(Salts.IMAGE_SET).from(methodeUuid);
+    final String uuid = imageSetUuid.toString();    
+    LOGGER.info("Importing content [{}] of type [{}] as image set [{}].",
+      methodeContent.getUuid(), methodeContent.getType(), uuid);
+   
+    return getModelAndHandleExceptions(methodeContent, httpHeaders, (transactionId) ->
+        methodeImageSetMapper
+            .mapImageSet(uuid, methodeContent, transactionId, new Date()));
   }
 
   @POST
